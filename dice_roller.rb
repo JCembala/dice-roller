@@ -1,6 +1,7 @@
-# In this iteration, running the dice_roller.rb should return 5 randomly generated numbers (five dice rolls).
-# However, the script should obtain the set by initially generating 7 dice rolls and excluding the highest and the lowest ones!
-# It is extremely important not to change the order of the numbers.
+# The script should generate the sets until it meets the following criteria:
+# the sum of the 5 randomly generated numbers is higher or equal to 55.
+# Returning a set which doesn't sum up to at least 55, is not valid.
+# However, the rolls dropped by satisfying specification in the point 2) should not count to the at least 55 rule!
 
 class Dice
 
@@ -25,9 +26,16 @@ class Dice
   def clear_set
     @set = []
   end
+
+  def roll_set_with_at_least_55_points
+    loop do
+      roll_set
+      break if @set.sum >= 55
+    end
+
+    @set
+  end
 end
 
 dice = Dice.new
-rolls = dice.roll_set
-
-p rolls
+p dice.roll_set_with_at_least_55_points
