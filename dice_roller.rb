@@ -1,8 +1,5 @@
-# The script should generate the sets until it meets the following criteria:
-# the sum of the 5 randomly generated numbers is higher or equal to 55.
-# Returning a set which doesn't sum up to at least 55, is not valid.
-# However, the rolls dropped by satisfying specification in the point 2) should not count to the at least 55 rule!
-
+# In this iteration we would like to perform additional roll, which would be appended to the set as last.
+# Again, this should not count for the at least 55 rule.
 class Dice
 
   def initialize(size = 20)
@@ -35,7 +32,16 @@ class Dice
 
     @set
   end
+
+  def roll_additional_dice
+    @set << roll_dice
+  end
+
+  def final_roll
+    roll_set_with_at_least_55_points
+    roll_additional_dice
+  end
 end
 
 dice = Dice.new
-p dice.roll_set_with_at_least_55_points
+p dice.final_roll
