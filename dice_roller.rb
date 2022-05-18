@@ -1,11 +1,12 @@
-# Before performing the roll specified in the point 2) generate a random number from within 1 - 30 range (i.e., roll a k30).
-# If the result is contained within the 1-7 range (included), perform another k30 roll.
-# Then if the result of additional roll is 1, write a logic which changes the behavior of throwing away the highest and the lowest numbers mentioned in the point 2) to: exclude two lowest numbers from the set.
+# Use the results of k30 dice rolls, specified in the point 5) to do the following: 
+# if the first roll is within the 1-7 range (included), and the second roll is within 24-30 (included), 
+# then the additional roll specified in the point 4) (aka "the sixth one") should always equal to 25.
 class Dice
 
   def initialize(size = 20)
     @size = size
     @set = []
+    @additional_set = []
   end
 
   def roll
@@ -21,13 +22,12 @@ class Dice
 
   def roll_set
     clear_set
-    k30_set = []
-    k30_set << roll_dice(30)
-    k30_set << roll_dice(30) if k30_set.first.between?(1, 7)
+    @additional_set << roll_dice(30)
+    @additional_set << roll_dice(30) if @additional_set.first.between?(1, 7)
 
     7.times { @set << roll_dice }
 
-    if k30_set[1] == 1
+    if @additional_set[1] == 1
       2.times { @set.delete_at(@set.index(@set.min)) }
     else
       @set.delete_at(@set.index(@set.max))
@@ -45,6 +45,8 @@ class Dice
   end
 
   def roll_additional_dice
+    return @set << 25 if !@additional_set[1].nil? && @additional_set[1].between?(24, 30)
+
     @set << roll_dice
   end
 
@@ -55,6 +57,7 @@ class Dice
 
   def clear_set
     @set = []
+    @additional_set = []
   end
 end
 
