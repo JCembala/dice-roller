@@ -1,6 +1,6 @@
-# Use the results of k30 dice rolls, specified in the point 5) to do the following: 
-# if the first roll is within the 1-7 range (included), and the second roll is within 24-30 (included), 
-# then the additional roll specified in the point 4) (aka "the sixth one") should always equal to 25.
+# In this iteration, running the dice_roller.rb script should display the following:
+# "Your randomly generated set: #{results}. Are you happy?" and the input prompt.
+# Entering anything other than "YES!" restarts the script.
 class Dice
 
   def initialize(size = 20)
@@ -62,4 +62,11 @@ class Dice
 end
 
 dice = Dice.new
-p dice.roll
+
+loop do
+  current_set = dice.roll
+
+  puts "Your randomly generated set: #{current_set}. Are you happy?"
+
+  break if gets.chomp == 'YES!'
+end
