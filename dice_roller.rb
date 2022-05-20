@@ -25,7 +25,7 @@ class Dice
     @additional_set << roll_dice(30)
     @additional_set << roll_dice(30) if @additional_set.first.between?(1, 7)
 
-    7.times { @set << roll_dice }
+    roll_recursive 7
 
     if @additional_set[1] == 1
       2.times { @set.delete_at(@set.index(@set.min)) }
@@ -42,6 +42,13 @@ class Dice
     end
 
     @set
+  end
+
+  def roll_recursive(times)
+    return if times <= 0
+
+    @set << roll_dice
+    roll_recursive(times - 1)
   end
 
   def roll_additional_dice
