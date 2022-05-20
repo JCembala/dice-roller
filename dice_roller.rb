@@ -50,11 +50,6 @@ class Dice
     @set << roll_dice
   end
 
-  def final_roll
-    roll_set_with_at_least_55_points
-    roll_additional_dice
-  end
-
   def clear_set
     @set = []
     @additional_set = []
